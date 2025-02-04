@@ -7,14 +7,10 @@ using Loupedeck.BasicOSCPlugin;
 public class SendOscToggleAction : PluginDynamicCommand
 {
     private Boolean _state = false;
-    private readonly BasicOSCPlugin _plugin;
 
-    public SendOscToggleAction(BasicOSCPlugin plugin)
+    public SendOscToggleAction()
         : base("Send OSC Message", "Sends an OSC toggle message", "OSC")
-    {
-        this._plugin = plugin;
-        this.AddParameter("settings", "OSC Settings", "OSC");
-    }
+            => this.MakeProfileAction("text;OSC Settings:");
 
     protected override void RunCommand(String actionParameter)
     {

@@ -4,6 +4,8 @@ using System.Text;
 
 using Loupedeck.BasicOSCPlugin;
 
+using OscCore;
+
 public static class OscClient
 {
     public static void SendOscMessage(String ip, Int32 port, String address, Single value)
@@ -11,9 +13,10 @@ public static class OscClient
         using (var udpClient = new UdpClient())
         {
             udpClient.Connect(ip, port);
-            var message = $"{address} {value}";
-            var data = Encoding.UTF8.GetBytes(message);
-            udpClient.Send(data, data.Length);
+            var message = new OscMessage(address, value);
+            var buffer = new Byte[message.SizeInBytes];
+            message.Write(buffer, 0);
+            udpClient.SendAsync(buffer);
         }
     }
 }
